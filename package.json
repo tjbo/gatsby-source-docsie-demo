@@ -1,0 +1,25 @@
+{
+	"name": "gatsby-source-docsie-demo",
+	"version": "1.0.0",
+	"private": true,
+	"description": "gatsby-source-docsie-demo",
+	"author": "tjbo",
+	"keywords": [
+		"gatsby"
+	],
+	"scripts": {
+		"transpile": "./node_modules/.bin/babel ./gatsby-node.js --out-dir dist-server",
+		"develop": "gatsby develop",
+		"watch": "nodemon --exec \"npm run develop\" --watch ../gatsby-source-docsie/dist",
+		"start": "gatsby develop",
+		"build": "gatsby build",
+		"serve": "gatsby serve",
+		"clean": "gatsby clean"
+	},
+	"dependencies": {
+		"gatsby": "^5.11.0",
+		"nodemon": "^3.0.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	}
+}
