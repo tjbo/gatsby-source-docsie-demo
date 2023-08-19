@@ -38,12 +38,14 @@ const DocsieNav = () => {
         {n.items.map((doc) => {
           return (
             <div>
-              {doc.name}
+              <b>
+                <Link to={doc.slug}>{doc.name}</Link>
+              </b>
               <div>
                 {doc.items.map((book) => {
                   return (
                     <div>
-                      <Link to={"#" + book.id}>{book.name}</Link>
+                      <Link to={book.slugAsHash}>{book.name}</Link>
                     </div>
                   )
                 })}
@@ -58,7 +60,7 @@ const DocsieNav = () => {
 }
 
 export default function DocsieBook(props) {
-  const { name, childrenDocsieArticle } = props.pageContext
+  const { name, childrenDocsieBook } = props.pageContext
 
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
@@ -66,12 +68,20 @@ export default function DocsieBook(props) {
         <DocsieNav></DocsieNav>
       </div>
       <div>
-        {childrenDocsieArticle.map((article) => {
+        {childrenDocsieBook.map((book) => {
+          console.log("book", book)
           return (
-            <div
-              dangerouslySetInnerHTML={{ __html: article.html }}
-              key={article.id}
-            />
+            <>
+              <h2>{book.name}</h2>
+              {book.childrenDocsieArticle.map((article) => {
+                return (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: article.html }}
+                    key={article.id}
+                  />
+                )
+              })}
+            </>
           )
         })}
       </div>

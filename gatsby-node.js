@@ -3,32 +3,42 @@ const path = require("path")
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   const queryResults = await graphql(`
-    query AllDocsieBook {
-      allDocsieBook {
+    query AllDocsieDoc {
+      allDocsieDoc {
         nodes {
+          slug
           id
           name
-          slug
-          childrenDocsieArticle {
-            html
-            id
+          order
+          childrenDocsieBook {
             name
             order
+            id
+            slug
+            slugAsHash
+            childrenDocsieArticle {
+              html
+              icon
+              id
+              name
+              order
+              slug
+            }
           }
         }
       }
     }
   `)
 
-  const bookTemplate = path.resolve(`src/templates/DocsieBook.js`)
+  const docTemplate = path.resolve(`src/templates/DocsieTemplate.js`)
 
-  queryResults.data.allDocsieBook.nodes.forEach((node) => {
-    console.log(node.children)
+  queryResults.data.allDocsieDoc.nodes.forEach((node) => {
     createPage({
-      path: `/${node.slug}`,
-      component: bookTemplate,
+      path: `${node.slug}`,
+      component: docTemplate,
       context: {
         ...node,
+        slug: `${node.slug}`,
       },
     })
   })
